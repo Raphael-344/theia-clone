@@ -15,39 +15,64 @@ const GRADE_BADGE = {
 }
 
 export default function AdminResults() {
-  const [sessions, setSessions] = useState([])
-  const [exams, setExams] = useState([])
+  const [sessions,        setSessions]        = useState([])
+  const [exams,           setExams]           = useState([])
   const [violationCounts, setViolationCounts] = useState({})
-  const [loading, setLoading] = useState(true)
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [loading,         setLoading]         = useState(true)
+  const [searchParams,    setSearchParams]    = useSearchParams()
   const selectedExam = searchParams.get('exam') ?? ''
 
   useEffect(() => {
     const load = async () => {
-      const [{ data: allSessions }, { data: allExams }] = await Promise.all([
-        supabase
-          .from('exam_sessions')
-          .select(`
-            id, exam_id, student_id, status, final_note, total_points, max_points, submitted_at,
-            profiles:student_id(full_name, email),
-            exams:exam_id(id, title)
-          `)
-          .eq('status', 'submitted')
-          .order('submitted_at', { ascending: false }),
-        supabase.from('exams').select('id, title').order('title'),
-      ])
+      // ── 1. Sessions soumises — sans join ───────────────────
+      const { data: rawSessions, error: sessErr } = await supabase
+        .from('exam_sessions')
+        .select('id, exam_id, student_id, status, final_note, total_points, max_points, submitted_at')
+        .eq('status', 'submitted')
+        .order('submitted_at', { ascending: false })
 
-      const sessionList = allSessions ?? []
-      setSessions(sessionList)
+      console.log('ADMIN RESULTS sessions:', rawSessions?.length, '| error:', sessErr?.message)
+
+      // ── 2. Examens — sans join ─────────────────────────────
+      const { data: allExams, error: examErr } = await supabase
+        .from('exams')
+        .select('id, title')
+        .order('title')
+
+      console.log('ADMIN RESULTS exams:', allExams?.length, '| error:', examErr?.message)
+
       setExams(allExams ?? [])
 
-      // Compter les violations par session
+      const sessionList = rawSessions ?? []
+
       if (sessionList.length > 0) {
+        // ── 3. Profils — batch sur student_ids uniques ─────────
+        const studentIds = [...new Set(sessionList.map((s) => s.student_id))]
+        const { data: profiles, error: profErr } = await supabase
+          .from('profiles')
+          .select('id, full_name, email')
+          .in('id', studentIds)
+
+        console.log('ADMIN RESULTS profiles:', profiles?.length, '| error:', profErr?.message)
+
+        const profileMap = Object.fromEntries((profiles ?? []).map((p) => [p.id, p]))
+        const examMap    = Object.fromEntries((allExams  ?? []).map((e) => [e.id, e]))
+
+        // Assembler manuellement
+        const assembled = sessionList.map((s) => ({
+          ...s,
+          profiles: profileMap[s.student_id] ?? null,
+          exams:    examMap[s.exam_id]        ?? null,
+        }))
+        setSessions(assembled)
+
+        // ── 4. Violations — batch sur session ids ──────────────
         const ids = sessionList.map((s) => s.id)
         const { data: logs } = await supabase
           .from('anti_cheat_logs')
           .select('session_id')
           .in('session_id', ids)
+
         const counts = {}
         for (const log of (logs ?? [])) {
           counts[log.session_id] = (counts[log.session_id] ?? 0) + 1
@@ -61,7 +86,7 @@ export default function AdminResults() {
   }, [])
 
   const filtered = selectedExam
-    ? sessions.filter((s) => s.exams?.id === selectedExam)
+    ? sessions.filter((s) => s.exam_id === selectedExam)
     : sessions
 
   // Numéro de tentative par (exam_id, student_id)
@@ -70,7 +95,7 @@ export default function AdminResults() {
     const asc = [...filtered].sort((a, b) => new Date(a.submitted_at) - new Date(b.submitted_at))
     const attemptMap = {}
     for (const s of asc) {
-      const key = `${s.exams?.id}:${s.student_id}`
+      const key = `${s.exam_id}:${s.student_id}`
       counterMap[key] = (counterMap[key] ?? 0) + 1
       attemptMap[s.id] = counterMap[key]
     }
@@ -101,9 +126,7 @@ export default function AdminResults() {
         {avg && (
           <span className="ml-auto text-sm font-medium text-gray-600">
             Moyenne :{' '}
-            <span className={`font-black text-base ${getNoteColor(parseFloat(avg))}`}>
-              {avg}%
-            </span>
+            <span className={`font-black text-base ${getNoteColor(parseFloat(avg))}`}>{avg}%</span>
             {' — '}
             <span className={`font-black ${GRADE_BADGE[getNoteGrade(parseFloat(avg))]?.split(' ')[1] ?? ''}`}>
               {getNoteGrade(parseFloat(avg))}
@@ -138,8 +161,8 @@ export default function AdminResults() {
               </thead>
               <tbody className="divide-y divide-theia-border">
                 {withAttempts.map((s) => {
-                  const grade = getNoteGrade(s.final_note ?? 0)
-                  const color = getNoteColor(s.final_note ?? 0)
+                  const grade  = getNoteGrade(s.final_note ?? 0)
+                  const color  = getNoteColor(s.final_note ?? 0)
                   const vCount = violationCounts[s.id] ?? 0
                   return (
                     <tr key={s.id} className="hover:bg-theia-gray/50 transition-colors">
@@ -163,9 +186,7 @@ export default function AdminResults() {
                           : '—'}
                       </td>
                       <td className="py-3 text-center">
-                        <span className={`font-black text-base ${color}`}>
-                          {s.final_note ?? 0}%
-                        </span>
+                        <span className={`font-black text-base ${color}`}>{s.final_note ?? 0}%</span>
                       </td>
                       <td className="py-3 text-center">
                         <span className={`text-xs px-2.5 py-1 rounded-full font-bold ${GRADE_BADGE[grade]}`}>
@@ -175,8 +196,7 @@ export default function AdminResults() {
                       <td className="py-3 text-center">
                         {vCount > 0 ? (
                           <span className="inline-flex items-center gap-1 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-medium">
-                            <ShieldAlert size={11} />
-                            {vCount}
+                            <ShieldAlert size={11} /> {vCount}
                           </span>
                         ) : (
                           <span className="text-xs text-gray-300">—</span>
