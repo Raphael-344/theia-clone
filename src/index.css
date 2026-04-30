@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    @apply bg-theia-gray font-sans text-gray-800 antialiased;
+  }
+  :root {
+    --sidebar-width: 260px;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-theia-teal text-white px-4 py-2 rounded-lg font-medium text-sm
+           hover:bg-theia-teal-light transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+  .btn-orange {
+    @apply bg-theia-orange text-white px-4 py-2 rounded-lg font-medium text-sm
+           hover:bg-theia-orange-hover transition-all duration-200 disabled:opacity-50;
+  }
+  .btn-green {
+    @apply bg-theia-green text-white px-4 py-2 rounded-lg font-medium text-sm
+           transition-all duration-300;
+  }
+  .btn-outline {
+    @apply border border-theia-border text-theia-gray-dark px-4 py-2 rounded-lg
+           font-medium text-sm hover:bg-white transition-colors duration-200;
+  }
+  .card {
+    @apply bg-white rounded-xl shadow-card p-6 border border-theia-border;
+  }
+  .badge-admin {
+    @apply bg-theia-pink-light text-theia-pink text-xs font-semibold px-2 py-0.5 rounded-full;
+  }
+  .badge-student {
+    @apply bg-blue-100 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded-full;
+  }
+  .input-field {
+    @apply w-full px-3 py-2 border border-theia-border rounded-lg text-sm
+           focus:outline-none focus:ring-2 focus:ring-theia-teal focus:border-transparent
+           placeholder-gray-400 transition-all duration-200;
+  }
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f0f4f8; }
+::-webkit-scrollbar-thumb { background: #b0c4cc; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #0d7a8c; }
+
+/* Animation pulse pour le bouton sauvegarde */
+@keyframes pulse-green {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(45, 164, 78, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(45, 164, 78, 0); }
+}
+.animate-pulse-green {
+  animation: pulse-green 1s ease-in-out 1;
+}
+
+/* Fullscreen exam */
+.exam-fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: #f0f4f8;
+  overflow-y: auto;
+}

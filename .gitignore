@@ -1,0 +1,32 @@
+# Dépendances
+node_modules/
+.pnp
+.pnp.js
+
+# Build
+dist/
+dist-ssr/
+*.local
+
+# Variables d'environnement (NE JAMAIS COMMITTER)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Éditeurs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
