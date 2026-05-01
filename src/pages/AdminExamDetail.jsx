@@ -57,8 +57,8 @@ function QuestionEditor({ question, index, total, onChange, onDelete, onMoveUp, 
 
   const setField = (key, val) => onChange({ ...question, [key]: val })
 
-  const setChoiceText = (choiceIdx, text) => {
-    const choices = question.choices.map((c, i) => i === choiceIdx ? { ...c, text } : c)
+  const setChoiceField = (choiceIdx, key, val) => {
+    const choices = question.choices.map((c, i) => i === choiceIdx ? { ...c, [key]: val || undefined } : c)
     onChange({ ...question, choices })
   }
 
@@ -88,13 +88,24 @@ function QuestionEditor({ question, index, total, onChange, onDelete, onMoveUp, 
   const TYPE_LABELS = { single: 'Réponse unique', multiple: 'Réponses multiples', text: 'Texte libre' }
 
   return (
-    <div className="card border border-theia-border">
+    <div className={`card border ${question.annulee ? 'border-red-300 bg-red-50/30 opacity-70' : 'border-theia-border'}`}>
       {/* Header question */}
       <div className="flex items-center justify-between gap-3 mb-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="text-xs font-bold text-white bg-theia-sidebar px-2.5 py-1 rounded-full">
             Q{index + 1}
           </span>
+          <button
+            onClick={() => setField('annulee', !question.annulee)}
+            title={question.annulee ? 'Réactiver la question' : 'Annuler la question'}
+            className={`text-xs font-semibold px-2.5 py-1 rounded-full border transition-colors ${
+              question.annulee
+                ? 'bg-red-100 text-red-700 border-red-300 hover:bg-red-200'
+                : 'bg-gray-100 text-gray-500 border-gray-200 hover:bg-red-50 hover:text-red-600 hover:border-red-200'
+            }`}
+          >
+            {question.annulee ? '✕ Annulée' : 'Annuler'}
+          </button>
           <select
             value={question.type}
             onChange={(e) => setField('type', e.target.value)}
@@ -173,39 +184,63 @@ function QuestionEditor({ question, index, total, onChange, onDelete, onMoveUp, 
             {(question.choices ?? []).map((choice, ci) => (
               <div
                 key={choice.id ?? ci}
-                className={`flex items-center gap-2 p-2 rounded-lg border transition-colors ${
+                className={`rounded-lg border transition-colors ${
                   choice.correct
                     ? 'border-theia-green bg-theia-green-light'
                     : 'border-theia-border bg-white'
                 }`}
               >
-                <button
-                  onClick={() => toggleCorrect(ci)}
-                  title={choice.correct ? 'Désigner comme incorrecte' : 'Désigner comme correcte'}
-                  className="shrink-0"
-                >
-                  {choice.correct
-                    ? <CheckSquare size={18} className="text-theia-green" />
-                    : <Square      size={18} className="text-gray-300 hover:text-theia-teal" />
-                  }
-                </button>
-                <span className="text-xs font-bold text-gray-500 w-5 shrink-0">
-                  {String(choice.id ?? LETTERS[ci]).toUpperCase()}.
-                </span>
-                <input
-                  value={choice.text}
-                  onChange={(e) => setChoiceText(ci, e.target.value)}
-                  placeholder={`Choix ${String(choice.id ?? LETTERS[ci]).toUpperCase()}`}
-                  className={`flex-1 text-sm bg-transparent border-0 outline-none focus:ring-0
-                    ${choice.correct ? 'text-green-800 font-medium' : 'text-gray-700'}`}
-                />
-                {choice.correct && <span className="text-xs shrink-0">✅</span>}
-                <button
-                  onClick={() => removeChoice(ci)}
-                  className="shrink-0 p-1 rounded hover:bg-red-100 text-gray-300 hover:text-theia-red"
-                >
-                  <X size={13} />
-                </button>
+                {/* Ligne principale : toggle correct + lettre + texte + supprimer */}
+                <div className="flex items-center gap-2 p-2">
+                  <button
+                    onClick={() => toggleCorrect(ci)}
+                    title={choice.correct ? 'Désigner comme incorrecte' : 'Désigner comme correcte'}
+                    className="shrink-0"
+                  >
+                    {choice.correct
+                      ? <CheckSquare size={18} className="text-theia-green" />
+                      : <Square      size={18} className="text-gray-300 hover:text-theia-teal" />
+                    }
+                  </button>
+                  <span className="text-xs font-bold text-gray-500 w-5 shrink-0">
+                    {String(choice.id ?? LETTERS[ci]).toUpperCase()}.
+                  </span>
+                  <input
+                    value={choice.text ?? ''}
+                    onChange={(e) => setChoiceField(ci, 'text', e.target.value)}
+                    placeholder={choice.image_url ? '(optionnel si image)' : `Texte du choix ${String(choice.id ?? LETTERS[ci]).toUpperCase()}`}
+                    className={`flex-1 text-sm bg-transparent border-0 outline-none focus:ring-0
+                      ${choice.correct ? 'text-green-800 font-medium' : 'text-gray-700'}`}
+                  />
+                  {choice.correct && <span className="text-xs shrink-0">✅</span>}
+                  <button
+                    onClick={() => removeChoice(ci)}
+                    className="shrink-0 p-1 rounded hover:bg-red-100 text-gray-300 hover:text-theia-red"
+                  >
+                    <X size={13} />
+                  </button>
+                </div>
+                {/* Ligne image : URL + aperçu */}
+                <div className="px-2 pb-2 flex items-center gap-2">
+                  <span className="text-xs text-gray-400 shrink-0">🖼</span>
+                  <input
+                    value={choice.image_url ?? ''}
+                    onChange={(e) => setChoiceField(ci, 'image_url', e.target.value)}
+                    placeholder="URL image (optionnel)"
+                    className="flex-1 text-xs text-gray-500 bg-transparent border-0 outline-none focus:ring-0"
+                  />
+                </div>
+                {choice.image_url && (
+                  <div className="px-2 pb-2">
+                    <img
+                      src={choice.image_url}
+                      alt="aperçu"
+                      className="rounded-lg max-w-full"
+                      style={{ maxHeight: 100 }}
+                      onError={(e) => { e.currentTarget.style.display = 'none' }}
+                    />
+                  </div>
+                )}
               </div>
             ))}
           </div>

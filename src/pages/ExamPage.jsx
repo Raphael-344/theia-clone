@@ -297,8 +297,13 @@ export default function ExamPage() {
                       <span className="text-xs text-gray-400 bg-gray-100 px-2.5 py-1 rounded-full">
                         ×{question.coefficient ?? 1} pts
                       </span>
+                      {question.annulee && (
+                        <span className="text-xs font-bold text-red-600 bg-red-100 px-2.5 py-1 rounded-full">
+                          Annulée
+                        </span>
+                      )}
                     </div>
-                    <h2 className="text-base font-semibold text-gray-800 leading-relaxed">
+                    <h2 className={`text-base font-semibold leading-relaxed ${question.annulee ? 'text-gray-400 line-through' : 'text-gray-800'}`}>
                       {question.text}
                     </h2>
                   </div>
@@ -359,9 +364,14 @@ export default function ExamPage() {
                             className="w-4 h-4 accent-theia-teal rounded"
                           />
                         )}
-                        <span className={`text-sm ${isSelected ? 'text-theia-teal font-medium' : 'text-gray-700'}`}>
-                          <span className="font-semibold mr-2">{choice.id.toUpperCase()}.</span>
-                          {choice.text}
+                        <span className={`text-sm flex items-center gap-2 ${isSelected ? 'text-theia-teal font-medium' : 'text-gray-700'}`}>
+                          <span className="font-semibold shrink-0">{choice.id.toUpperCase()}.</span>
+                          {choice.image_url
+                            ? <img src={choice.image_url} alt={`Choix ${choice.id.toUpperCase()}`}
+                                className="rounded-lg max-w-full"
+                                style={{ maxHeight: 120 }} />
+                            : choice.text
+                          }
                         </span>
                       </label>
                     )
