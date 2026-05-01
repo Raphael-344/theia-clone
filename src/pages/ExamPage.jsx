@@ -303,9 +303,11 @@ export default function ExamPage() {
                         </span>
                       )}
                     </div>
-                    <h2 className={`text-base font-semibold leading-relaxed ${question.annulee ? 'text-gray-400 line-through' : 'text-gray-800'}`}>
-                      {question.text}
-                    </h2>
+                    {!(question.image_url && question.text === '(voir image)') && (
+                      <h2 className={`text-base font-semibold leading-relaxed ${question.annulee ? 'text-gray-400 line-through' : 'text-gray-800'}`}>
+                        {question.text}
+                      </h2>
+                    )}
                   </div>
                   {hasAnswer && (
                     <div className={`shrink-0 w-2.5 h-2.5 rounded-full mt-2 ${isSaved ? 'bg-theia-green' : 'bg-theia-orange'}`} />
