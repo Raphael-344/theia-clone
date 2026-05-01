@@ -34,19 +34,46 @@ export function scoreExam(questions, answers) {
     const studentAnswer = answers[question.id]
 
     if (question.type === 'text') {
-      discordances.push({
-        questionId: question.id,
-        questionText: question.text,
-        type: 'text',
-        expectedAnswer: '(correction manuelle)',
-        studentAnswer: studentAnswer ?? '(non répondu)',
-        score: 0,
-        maxScore: coeff,
-        status: 'manual',
-        coeff,
-        discordanceCount: 0,
-        totalProps: 0,
-      })
+      // Cherche la bonne réponse : champ correct_answer ou premier choix avec correct: true
+      const correctChoice = question.choices?.find((c) => c.correct)
+      const correctAnswer = question.correct_answer ?? correctChoice?.text ?? null
+
+      if (correctAnswer !== null && correctAnswer !== '') {
+        // Correction automatique : comparaison insensible à la casse et aux espaces
+        const norm = (v) => String(v ?? '').trim().toLowerCase()
+        const isCorrect = norm(studentAnswer) === norm(correctAnswer)
+        const score = isCorrect ? coeff : 0
+        totalPoints += score
+
+        discordances.push({
+          questionId:      question.id,
+          questionText:    question.text,
+          type:            'text',
+          expectedAnswer:  String(correctAnswer),
+          studentAnswer:   String(studentAnswer ?? '(non répondu)'),
+          score,
+          maxScore:        coeff,
+          status:          !studentAnswer ? 'empty' : isCorrect ? 'correct' : 'wrong',
+          coeff,
+          discordanceCount: isCorrect ? 0 : 1,
+          totalProps:       0,
+        })
+      } else {
+        // Pas de bonne réponse définie → correction manuelle
+        discordances.push({
+          questionId:      question.id,
+          questionText:    question.text,
+          type:            'text',
+          expectedAnswer:  '(correction manuelle)',
+          studentAnswer:   studentAnswer ?? '(non répondu)',
+          score:           0,
+          maxScore:        coeff,
+          status:          'manual',
+          coeff,
+          discordanceCount: 0,
+          totalProps:       0,
+        })
+      }
       continue
     }
 

@@ -46,7 +46,8 @@ export default function ExamPage() {
   const [savedAnswers, setSavedAnswers] = useState({})
   const [loading, setLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
-  const [saving, setSaving] = useState(false)
+  const [saving,     setSaving]     = useState(false)
+  const [lightboxSrc, setLightboxSrc] = useState(null)
 
   // Violations enregistrées mais jamais de soumission forcée
   const { requestFullscreen, exitFullscreen } = useAntiCheat({
@@ -311,8 +312,9 @@ export default function ExamPage() {
                     <img
                       src={question.image_url}
                       alt="Illustration de la question"
-                      className="max-w-full rounded-xl border border-theia-border shadow-sm"
-                      style={{ maxHeight: 360 }}
+                      className="max-w-full rounded-xl border border-theia-border shadow-sm transition-opacity hover:opacity-90"
+                      style={{ maxHeight: 600, cursor: 'zoom-in' }}
+                      onClick={() => setLightboxSrc(question.image_url)}
                     />
                   </div>
                 )}
@@ -404,6 +406,30 @@ export default function ExamPage() {
           </div>
         </div>
       </div>
+
+      {/* Lightbox */}
+      {lightboxSrc && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          style={{ backgroundColor: 'rgba(0,0,0,0.85)' }}
+          onClick={() => setLightboxSrc(null)}
+        >
+          <img
+            src={lightboxSrc}
+            alt="Plein écran"
+            className="max-w-full max-h-full rounded-xl shadow-2xl"
+            style={{ cursor: 'zoom-out' }}
+            onClick={(e) => e.stopPropagation()}
+          />
+          <button
+            onClick={() => setLightboxSrc(null)}
+            className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 hover:bg-white/30
+                       text-white text-xl font-bold flex items-center justify-center transition-colors"
+          >
+            ×
+          </button>
+        </div>
+      )}
     </div>
   )
 }
