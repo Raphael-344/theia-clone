@@ -19,8 +19,9 @@ const SCALE = [
 ]
 
 const STATUS_BAND = {
-  correct: { bg: '#d4edda', border: '#28a745', text: '#155724', label: 'Réponses correctes' },
-  partial:  { bg: '#fff3cd', border: '#fd7e14', text: '#856404', label: 'Réponses partiellement correctes' },
+  correct:   { bg: '#d4edda', border: '#28a745', text: '#155724', label: 'Réponses correctes' },
+  partial:   { bg: '#fff3cd', border: '#fd7e14', text: '#856404', label: 'Réponses partiellement correctes' },
+  cancelled: { bg: '#e2e3e5', border: '#6c757d', text: '#383d41', label: 'Question annulée — non comptée' },
   wrong:    { bg: '#f8d7da', border: '#dc3545', text: '#721c24', label: 'Réponses incorrectes' },
   empty:    { bg: '#f8d7da', border: '#dc3545', text: '#721c24', label: 'Sans réponse' },
   manual:   { bg: '#e2e3e5', border: '#6c757d', text: '#383d41', label: 'Correction manuelle' },
@@ -58,9 +59,12 @@ function QuestionBlock({ discordance: d, question, studentAnswers, index }) {
         <span className="text-white text-xs opacity-80 font-medium">{qType}</span>
       </div>
 
-      {/* ── 2. Texte de la question ───────────────────────── */}
+      {/* ── 2. Texte de la question (ou image si "(voir image)") ── */}
       <div className="px-5 py-4 bg-white border-b border-gray-100">
-        <p className="text-sm font-semibold text-gray-800 leading-relaxed">{d.questionText}</p>
+        {d.questionText === '(voir image)' && question?.image_url
+          ? <img src={question.image_url} alt="Question" className="rounded-xl max-w-full mb-2" style={{ maxHeight: 280 }} />
+          : <p className="text-sm font-semibold text-gray-800 leading-relaxed">{d.questionText}</p>
+        }
         <p className="text-xs text-gray-400 mt-1">Coefficient : ×{d.coeff}</p>
       </div>
 
