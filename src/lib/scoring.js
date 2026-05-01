@@ -30,21 +30,63 @@ export function scoreExam(questions, answers) {
 
   for (const question of questions) {
     const coeff = question.coefficient ?? 1
-    maxPoints += coeff
     const studentAnswer = answers[question.id]
 
+    // Questions annulées — exclues du barème (maxPoints inchangé)
+    if (question.annulee) {
+      discordances.push({
+        questionId:      question.id,
+        questionText:    question.text,
+        type:            question.type,
+        expectedAnswer:  '(question annulée)',
+        studentAnswer:   '—',
+        score:           0,
+        maxScore:        0,
+        status:          'cancelled',
+        coeff:           0,
+        discordanceCount: 0,
+        totalProps:       0,
+      })
+      continue
+    }
+
+    maxPoints += coeff
+
     if (question.type === 'text') {
-      // Cherche la bonne réponse : champ correct_answer ou premier choix avec correct: true
+      // ── 1. Plage numérique [min ; max] ──────────────────────
+      const hasRange = question.correct_answer_min != null && question.correct_answer_max != null
+      if (hasRange) {
+        const val = parseFloat(String(studentAnswer ?? '').trim().replace(',', '.'))
+        const min = parseFloat(question.correct_answer_min)
+        const max = parseFloat(question.correct_answer_max)
+        const isCorrect = !isNaN(val) && val >= min && val <= max
+        const score = isCorrect ? coeff : 0
+        totalPoints += score
+        discordances.push({
+          questionId:      question.id,
+          questionText:    question.text,
+          type:            'text',
+          expectedAnswer:  `${min} ≤ x ≤ ${max}`,
+          studentAnswer:   String(studentAnswer ?? '(non répondu)'),
+          score,
+          maxScore:        coeff,
+          status:          !studentAnswer ? 'empty' : isCorrect ? 'correct' : 'wrong',
+          coeff,
+          discordanceCount: isCorrect ? 0 : 1,
+          totalProps:       0,
+        })
+        continue
+      }
+
+      // ── 2. Valeur exacte (correct_answer ou choix correct) ───
       const correctChoice = question.choices?.find((c) => c.correct)
       const correctAnswer = question.correct_answer ?? correctChoice?.text ?? null
 
       if (correctAnswer !== null && correctAnswer !== '') {
-        // Correction automatique : comparaison insensible à la casse et aux espaces
         const norm = (v) => String(v ?? '').trim().toLowerCase()
         const isCorrect = norm(studentAnswer) === norm(correctAnswer)
         const score = isCorrect ? coeff : 0
         totalPoints += score
-
         discordances.push({
           questionId:      question.id,
           questionText:    question.text,
@@ -59,7 +101,7 @@ export function scoreExam(questions, answers) {
           totalProps:       0,
         })
       } else {
-        // Pas de bonne réponse définie → correction manuelle
+        // ── 3. Correction manuelle ───────────────────────────────
         discordances.push({
           questionId:      question.id,
           questionText:    question.text,

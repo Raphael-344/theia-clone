@@ -1,0 +1,503 @@
+{
+  "title": "Structure des Matériaux 25-26",
+  "description": "20",
+  "duration": 20,
+  "questions": [
+    {
+      "id": 1,
+      "type": "single",
+      "text": "On considère l’atome (Aluminium). Combien cet atome posède-t-il de neutrons, d’électrons et quel est son numéro atomique Z ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "14 neutrons ; 27 électrons ; Z = 13",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "13 neutrons ; 14 électrons ; Z = 13",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "13 neutrons ; 14 électrons ; Z = 27",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "14 neutrons ; 13 électrons ; Z = 13",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "27 neutrons ; 13 électrons ; Z = 14",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 2,
+      "type": "single",
+      "text": "Une bare en acier ductile de diamètre d = 12 m est soumise à une force axiale maximale de 56,5 kN. Quele est la contrainte normale maximale dans la bare ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "50 MPa",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "0,5 MPa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "50 kN",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "50 MPa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "5 MPa",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 3,
+      "type": "multiple",
+      "text": "Une bare en acier de section rectangulaire (largeur b = 20 m, hauteur h = 10 m) est soumise à une force de traction F = 30 0 N. Quele est la contrainte normale σ dans la bare ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "15 N/m2",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "15 MPa",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "150 MPa",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "30 MPa",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "150 N/m2",
+          "correct": true
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 4,
+      "type": "single",
+      "text": "Les matériaux à liaisons covalentes présentent en général :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Une faible température de fusion",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Une faible résistance mécanique",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Une bone conductivité électrique",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Une grande dureté",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Une grande plasticité",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 5,
+      "type": "single",
+      "text": "Le domaine plastique est intéresant pour :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Déterminer la mase volumique",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Identifier la rigidité",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Calculer la température de fusion",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Mesurer le retour élastique",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Caractériser la ductilité d’un matériau",
+          "correct": true
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 6,
+      "type": "single",
+      "text": "Dans une courbe de traction, le domaine plastique se caractérise par :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Une absence de déformation",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Un retour élastique complet",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Une rupture imédiate",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Une déformation permanente",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Une déformation réversible",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 7,
+      "type": "single",
+      "text": "La limite d’élasticité corespond à :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "La contrainte au-delà de laquele la déformation devient iréversible",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Le retour élastique",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La rupture",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La contrainte maximale suportée",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "L’alongement total",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 8,
+      "type": "single",
+      "text": "Lors d'un esai de traction, à quel domaine de la courbe contrainte-déformation corespond la loi de Hoke (comportement linéaire et réversible) ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Le domaine élastique",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La zone de rupture",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Le domaine d'écrouisage",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Le domaine plastique",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La zone de striction",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 9,
+      "type": "single",
+      "text": "Pour une aplication nécesitant une grande dureté et une forte température de fusion, on choisira :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Un cuivre",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Un vere organique",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Un aliage ductile",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Un polymère souple",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Une céramique",
+          "correct": true
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 10,
+      "type": "single",
+      "text": "Les matériaux ioniques présentent en général :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Une grande souplese",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Une bone conductivité électrique à l’état solide",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Une bone résistance mécanique mais une grande fragilité",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Une faible température de fusion",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Une ductilité importante",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 11,
+      "type": "text",
+      "text": "Que concluez-vous de la liaison Na-Cl ? Entrez le chifre corespondant au type de liaison. 1- Liaison covalente 2- Liaison métalique 3- Liaison ionique 4- Liaison moléculaire 5- Liaison hydrogène 3",
+      "choices": [
+        {
+          "id": "a",
+          "text": "1- - Liaison covalente",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "2- - Liaison métalique",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "3- - Liaison ionique",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "4- - Liaison moléculaire",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "5- - Liaison hydrogène",
+          "correct": false
+        }
+      ],
+      "image_url": null,
+      "correct_answer": "3"
+    },
+    {
+      "id": 12,
+      "type": "single",
+      "text": "Quele est la caractéristique principale d’une liaison ionique ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "La délocalisation des électrons dans un réseau",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "L’atraction électrostatique entre molécules polaires",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Le partage d’électrons entre deux atomes",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "L’atraction entre un ion positif et un ion négatif",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "La formation de molécules à partir de noyaux",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 13,
+      "type": "single",
+      "text": "Une bare en acier de section rectangulaire (largeur b = 20 m, hauteur h = 10 m) a un module de Young E = 210 GPa et est soumise à la contrainte σ = 150 MPa. Quele est la déformation ε ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "0,0714",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "0,0714",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "0,0714",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "0,0714",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "0,714",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 14,
+      "type": "single",
+      "text": "Pour calculer la contrainte à partir d’une force F et d’une section S, on utilise :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "S / F",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "F + S",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "F / S",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "F - S",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "F · S",
+          "correct": false
+        }
+      ],
+      "image_url": null
+    },
+    {
+      "id": 15,
+      "type": "multiple",
+      "text": "Parmi les propositions suivantes, queles zones aparaisent sur la courbe de traction suivante :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Zone plastique",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "Zone élastique",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Zone liquide",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Striction",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Zone fragile uniquement",
+          "correct": false
+        }
+      ],
+      "image_url": "https://ncexrrdqlhvfkzdrcpoc.supabase.co/storage/v1/object/public/exam-images/question_b7269478.png"
+    }
+  ]
+}

@@ -1,0 +1,295 @@
+{
+  "title": "WBS-OBS Modélisation CPI-A1-24-25",
+  "description": "20",
+  "duration": 20,
+  "questions": [
+    {
+      "id": 1,
+      "type": "multiple",
+      "text": "Lors de l’établissement dune WBS, quelle proposition est incorrecte ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Chaque livrable doit être clairement défini et mesurable.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "La WBS doit inclure les livrables nécessaires à la rêussite du projet.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Les tâches répétitives ou non essentielles peuvent être omises pour améliorer l’efficacité du projet.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Le découpage doit permettre une meilleure estimation des coûts et des risques.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La WBS doit couvrir 100% du périmètre du projet.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "type": "multiple",
+      "text": "Un manager de projet souhaite intégrer le travail « Formation des utilisateurs finaux » à la WBS d’un projet de base de données. Dans quelle phase générique de la WBS cela peut-il figurer ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Analyse des besoins.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Conception.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Implémentation.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Déploiement et formation des utilisateurs finaux.",
+          "correct": true
+        },
+        {
+          "id": "e",
+          "text": "Clôture du projet.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "type": "multiple",
+      "text": "Comment l’OBS (Organization Breakdown Structure) est-elle généralement utilisée en conjonction avec la WBS ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "(+1) Pour créer un diagramme de Gantt détaillé.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Pour élaborer une matrice de responsabilités en croisant les éléments de la WBS et d’identifier les opportunités de synergies entre différentes parties prenantes du projet.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Pour déterminer uniquement le budget du projet.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Pour remplacer la WBS dans les projets de petite envergure.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Pour définir la séquence des activités du projet.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "multiple",
+      "text": "La WBS est généralement représentée sous forme :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "De diagramme de Gantt.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "D’arborescence hiérarchique.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "De matrice de responsabilités (RACI).",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "De tableau de bord de suivi.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "De diagramme en réseau (PERT).",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "multiple",
+      "text": "Quelle est la principale différence entre la WBS (Work Breakdown Structure) et l'OBS (Organization Breakdown Structure) ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "La WBS décompose le projet en livrables tandis que l’OBS organise le projet autour de l’organisation et des responsabilités.",
+          "correct": true
+        },
+        {
+          "id": "b",
+          "text": "La WBS est utilisée uniquement en début de projet tandis que l'OBS est utilisée à tout moment du cycle de vie du projet.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "La WBS inclut les coûts tandis que l’OBS se concentre uniquement sur les ressources et la structure organisationnelle.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "La WBS est obligatoire selon le PMI tandis que l'OBS est facultative.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "La WBS est un outil de planification tandis que l’OBS est un outil de contrôle et de gestion du projet.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "multiple",
+      "text": "Quel est l'objectif principal du Work Package (paquet de travail) dans une WBS ?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Définir les objectifs SMART du projet.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Faciliter le suivi financier du projet.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Décomposer les activités en composants les plus petits permettant une meilleure planification et gestion du projet.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Déterminer la date de début et de fin de chaque activité.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Identifier les ressources humaines nécessaires pour chaque tâche.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "type": "multiple",
+      "text": "Le WBS est principalement utilisé pour",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Définir les risques du projet.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Dresser l’organigramme de l’équipe projet.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Décomposer le projet en livrables et sous-livrables gérables, ainsi que faciliter la planification et la gestion du projet.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Calculer la rentabilité financière du projet.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Établir le calendrier détaillé des activités.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "type": "multiple",
+      "text": "Dans une WBS, chaque niveau descendant doit :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Être plus large que le précédent.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Être moins précis que le précédent.",
+          "correct": false
+        },
+        {
+          "id": "c",
+          "text": "Représenter un regroupement des livrables du niveau précédent, avec des détails plus précis.",
+          "correct": true
+        },
+        {
+          "id": "d",
+          "text": "Apporter plus de détails sur les activités que le niveau précédent.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Définir la séquence des activités du projet.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "type": "multiple",
+      "text": "L'OBS est utilisée pour :",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Définir la séquence des activités du projet.",
+          "correct": false
+        },
+        {
+          "id": "b",
+          "text": "Identifiez les opportunités de synergies entre différentes parties prenantes du projet.",
+          "correct": true
+        },
+        {
+          "id": "c",
+          "text": "Déterminer le budget et les ressources nécessaires pour chaque activité.",
+          "correct": false
+        },
+        {
+          "id": "d",
+          "text": "Établir un calendrier de projet.",
+          "correct": false
+        },
+        {
+          "id": "e",
+          "text": "Gérer les risques et les opportunités du projet.",
+          "correct": true
+        }
+      ]
+    }
+  ]
+}
