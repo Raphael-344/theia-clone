@@ -10,6 +10,7 @@ import AdminExams from './pages/AdminExams'
 import AdminImport from './pages/AdminImport'
 import AdminStudents from './pages/AdminStudents'
 import AdminResults from './pages/AdminResults'
+import AdminExamDetail from './pages/AdminExamDetail'
 import StudentExams from './pages/StudentExams'
 import StudentResults from './pages/StudentResults'
 import ExamPage from './pages/ExamPage'
@@ -73,7 +74,8 @@ function AppRoutes() {
 
       {/* Admin */}
       <Route path="/admin"           element={<RequireAuth><RequireAdmin><AdminDashboard /></RequireAdmin></RequireAuth>} />
-      <Route path="/admin/exams"     element={<RequireAuth><RequireAdmin><AdminExams /></RequireAdmin></RequireAuth>} />
+      <Route path="/admin/exams"      element={<RequireAuth><RequireAdmin><AdminExams /></RequireAdmin></RequireAuth>} />
+      <Route path="/admin/exams/:id"  element={<RequireAuth><RequireAdmin><AdminExamDetail /></RequireAdmin></RequireAuth>} />
       <Route path="/admin/import"    element={<RequireAuth><RequireAdmin><AdminImport /></RequireAdmin></RequireAuth>} />
       <Route path="/admin/students"  element={<RequireAuth><RequireAdmin><AdminStudents /></RequireAdmin></RequireAuth>} />
       <Route path="/admin/results"   element={<RequireAuth><RequireAdmin><AdminResults /></RequireAdmin></RequireAuth>} />

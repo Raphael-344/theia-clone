@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Eye, Trash2, ToggleLeft, ToggleRight, Clock, HelpCircle, Users } from 'lucide-react'
+import { Pencil, Trash2, ToggleLeft, ToggleRight, Clock, HelpCircle, Users } from 'lucide-react'
 import { supabase } from '../../lib/supabase'
 import toast from 'react-hot-toast'
 import { format } from 'date-fns'
@@ -118,6 +118,13 @@ export default function ExamList() {
             >
               {exam.is_active ? <ToggleRight size={20} /> : <ToggleLeft size={20} />}
             </button>
+            <Link
+              to={`/admin/exams/${exam.id}`}
+              className="p-2 rounded-lg text-gray-400 hover:bg-theia-gray hover:text-theia-teal transition-colors"
+              title="Modifier l'examen"
+            >
+              <Pencil size={18} />
+            </Link>
             <Link
               to={`/admin/results?exam=${exam.id}`}
               className="p-2 rounded-lg text-gray-400 hover:bg-gray-100 hover:text-theia-teal transition-colors"
