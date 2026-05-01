@@ -143,6 +143,26 @@ function QuestionEditor({ question, index, total, onChange, onDelete, onMoveUp, 
         />
       </Field>
 
+      {/* Image (optionnelle) */}
+      <Field label="Image (URL optionnelle)">
+        <InlineInput
+          value={question.image_url ?? ''}
+          onChange={(v) => setField('image_url', v || null)}
+          placeholder="https://… (laisser vide pour aucune image)"
+        />
+      </Field>
+      {question.image_url && (
+        <div className="flex justify-center mt-2">
+          <img
+            src={question.image_url}
+            alt="Aperçu"
+            className="max-w-full rounded-xl border border-theia-border shadow-sm"
+            style={{ maxHeight: 280 }}
+            onError={(e) => { e.currentTarget.style.display = 'none' }}
+          />
+        </div>
+      )}
+
       {/* Choix (si pas text) */}
       {!isText && (
         <div className="mt-4">

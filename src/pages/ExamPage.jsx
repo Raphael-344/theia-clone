@@ -306,6 +306,17 @@ export default function ExamPage() {
                   )}
                 </div>
 
+                {question.image_url && (
+                  <div className="flex justify-center my-4">
+                    <img
+                      src={question.image_url}
+                      alt="Illustration de la question"
+                      className="max-w-full rounded-xl border border-theia-border shadow-sm"
+                      style={{ maxHeight: 360 }}
+                    />
+                  </div>
+                )}
+
                 <div className="space-y-2.5">
                   {question.type === 'text' ? (
                     <textarea
