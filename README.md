@@ -65,6 +65,20 @@ python extract.py mon_examen.pdf "Titre de l'examen" "Description" 20
 
 ---
 
+## Accès démo
+
+> **Pour démo uniquement** — ces identifiants donnent accès à l'interface étudiant sur l'instance de démonstration.
+
+| Champ | Valeur |
+|---|---|
+| Email | `demo@theia.com` |
+| Mot de passe | `Demo1234` |
+| Rôle | Étudiant |
+
+Le compte démo est en lecture seule côté étudiant : il permet de consulter les examens disponibles et de voir l'interface, mais les sessions passées avec ce compte ne sont pas représentatives de vraies données.
+
+---
+
 ## Captures d'écran
 
 > **À ajouter manuellement** — lance le projet en local (`npm run dev`) et capture les vues suivantes :
