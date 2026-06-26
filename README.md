@@ -29,7 +29,7 @@ Reproduction open-source de la plateforme THEIA permettant aux administrateurs d
 - Import d'examens via JSON ou extraction automatique depuis un PDF
 - Suivi des sessions en cours et des résultats par étudiant
 - Correction manuelle des questions à réponse libre
-- Gestion des comptes étudiants
+- Création manuelle des comptes étudiants (email, nom, mot de passe) — il n'y a pas d'inscription en libre-service, seul l'administrateur peut ajouter des étudiants
 
 ### Types de questions
 - **Choix unique** — une seule bonne réponse
