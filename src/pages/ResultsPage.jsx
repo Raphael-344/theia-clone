@@ -49,6 +49,10 @@ function QuestionBlock({ discordance: d, question, studentAnswers, index }) {
               : d.type === 'multiple' ? 'Question à réponses multiples'
               : 'Question à réponse libre'
 
+  // Nouvelles sessions : image embarquée dans la discordance
+  // Anciennes sessions : fallback sur question.image_url
+  const imageUrl = d.questionImageUrl ?? question?.image_url
+
   return (
     <div className="rounded-xl overflow-hidden shadow-sm border border-gray-200">
 
@@ -61,8 +65,8 @@ function QuestionBlock({ discordance: d, question, studentAnswers, index }) {
 
       {/* ── 2. Texte de la question (ou image si "(voir image)") ── */}
       <div className="px-5 py-4 bg-white border-b border-gray-100">
-        {d.questionText === '(voir image)' && question?.image_url
-          ? <img src={question.image_url} alt="Question" className="rounded-xl max-w-full mb-2" style={{ maxHeight: 280 }} />
+        {d.questionText === '(voir image)' && imageUrl
+          ? <img src={imageUrl} alt="Question" className="rounded-xl max-w-full mb-2" style={{ maxHeight: 280 }} />
           : <p className="text-sm font-semibold text-gray-800 leading-relaxed">{d.questionText}</p>
         }
         <p className="text-xs text-gray-400 mt-1">Coefficient : ×{d.coeff}</p>
@@ -99,20 +103,21 @@ function QuestionBlock({ discordance: d, question, studentAnswers, index }) {
 function ChoiceTable({ discordance: d, question, studentAnswers }) {
   const choices = question?.choices ?? []
 
-  const selectedIds = (() => {
-    if (!question) return new Set()
-    if (question.type === 'single')
-      return new Set(studentAnswers ? [studentAnswers] : [])
-    return new Set(Array.isArray(studentAnswers) ? studentAnswers : [])
-  })()
-
   if (choices.length === 0) {
     return (
-      <div className="px-5 py-3 bg-white text-xs text-gray-400 italic">
-        Données de correction indisponibles pour cette question.
+      <div className="px-5 py-4 bg-white">
+        <p className="text-xs text-gray-500 mb-1">Réponse saisie</p>
+        <p className="text-sm text-gray-700">{d.studentAnswer || '(non répondu)'}</p>
+        <p className="text-xs text-gray-400 mt-2">Réponse attendue : {d.expectedAnswer}</p>
       </div>
     )
   }
+
+  const selectedIds = (() => {
+    if (!question) return new Set()
+    if (question.type === 'single') return new Set(studentAnswers ? [studentAnswers] : [])
+    return new Set(Array.isArray(studentAnswers) ? studentAnswers : [])
+  })()
 
   return (
     <div className="overflow-x-auto">
@@ -134,27 +139,25 @@ function ChoiceTable({ discordance: d, question, studentAnswers }) {
         </thead>
         <tbody>
           {choices.map((choice) => {
-            const expected = choice.correct
-            const saisie   = selectedIds.has(choice.id)
-            const discord  = expected !== saisie
-
+            const isCorrect   = choice.correct === true
+            const isSelected  = selectedIds.has(choice.id)
+            const isDiscordant = isCorrect !== isSelected
             let rowBg = 'transparent'
-            if (discord)  rowBg = '#fdecea'   // rouge très clair
-            if (expected && !discord) rowBg = '#f0faf4'  // vert très clair si bonne réponse bien cochée
-
+            if (isDiscordant) rowBg = '#fdecea'
+            if (isCorrect && !isDiscordant) rowBg = '#f0faf4'
             return (
               <tr key={choice.id} style={{ backgroundColor: rowBg }}>
                 <td className="px-3 py-2.5 text-center font-bold text-gray-700 border-b border-r border-gray-200 text-sm">
                   {String(choice.id).toUpperCase()}
                 </td>
                 <td className="px-3 py-2.5 text-center border-b border-r border-gray-200">
-                  <CheckSymbol yes={expected} />
+                  <CheckSymbol yes={isCorrect} />
                 </td>
                 <td className="px-3 py-2.5 text-center border-b border-r border-gray-200">
-                  <CheckSymbol yes={saisie} />
+                  <CheckSymbol yes={isSelected} />
                 </td>
                 <td className="px-3 py-2.5 text-center border-b border-r border-gray-200">
-                  {discord ? (
+                  {isDiscordant ? (
                     <span className="text-xs font-bold px-2 py-0.5 rounded"
                           style={{ background: '#f8d7da', color: '#721c24' }}>
                       Oui (+1)
@@ -164,9 +167,13 @@ function ChoiceTable({ discordance: d, question, studentAnswers }) {
                   )}
                 </td>
                 <td className={`px-4 py-2.5 text-sm border-b border-gray-200 ${
-                  expected ? 'font-semibold text-green-700' : 'text-gray-700'
+                  isCorrect ? 'font-semibold text-green-700' : 'text-gray-700'
                 }`}>
-                  {choice.text}
+                  {choice.image_url
+                    ? <img src={choice.image_url} alt={`Choix ${choice.id.toUpperCase()}`}
+                           className="rounded-lg max-w-full" style={{ maxHeight: 120 }} />
+                    : choice.text
+                  }
                 </td>
               </tr>
             )

@@ -134,18 +134,18 @@ export default function ExamPage() {
     if (!forced && !confirm('Êtes-vous sûr de vouloir remettre votre examen ?')) return
     setSubmitting(true)
 
-    const { totalPoints, maxPoints, finalNote, discordances } = scoreExam(exam.questions, answers)
+    const result = scoreExam(exam.questions, answers)
 
     const { error } = await supabase
       .from('exam_sessions')
       .update({
-        answers,
+        answers:      answers,
         submitted_at: new Date().toISOString(),
-        status: 'submitted',
-        final_note: finalNote,
-        total_points: totalPoints,
-        max_points: maxPoints,
-        discordances,
+        status:       'submitted',
+        final_note:   result.finalNote,
+        total_points: result.totalPoints,
+        max_points:   result.maxPoints,
+        discordances: result.discordances,
       })
       .eq('id', session.id)
 

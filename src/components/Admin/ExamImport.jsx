@@ -103,20 +103,22 @@ export default function ExamImport() {
     if (!parsedData) return
     setLoading(true)
     try {
-      const { error } = await supabase.from('exams').insert({
-        title: parsedData.title,
-        description: parsedData.description ?? null,
-        duration: parsedData.duration ?? 60,
-        questions: parsedData.questions,
-        created_by: user.id,
-        is_active: true,
-      })
+      const { error } = await supabase
+        .from('exams')
+        .insert({
+          title:       parsedData.title,
+          description: parsedData.description ?? null,
+          duration:    parsedData.duration ?? 60,
+          questions:   parsedData.questions,
+          created_by:  user.id,
+          is_active:   true,
+        })
       if (error) throw error
       toast.success('Examen importé avec succès !')
       setParsedData(null)
       setErrors([])
     } catch (err) {
-      toast.error('Erreur lors de l\'import : ' + err.message)
+      toast.error("Erreur lors de l'import : " + err.message)
     } finally {
       setLoading(false)
     }

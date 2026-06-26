@@ -6,7 +6,6 @@ import {
 } from 'lucide-react'
 import Layout from '../components/Layout/Layout'
 import { supabase } from '../lib/supabase'
-import { scoreExam } from '../lib/scoring'
 import toast from 'react-hot-toast'
 
 const LETTERS = 'abcdefghijklmnopqrstuvwxyz'
@@ -268,12 +267,13 @@ export default function AdminExamDetail() {
   const [dirty,   setDirty]   = useState(false)
 
   useEffect(() => {
-    supabase.from('exams').select('*').eq('id', id).single()
-      .then(({ data, error }) => {
-        if (error || !data) { toast.error('Examen introuvable'); navigate('/admin/exams'); return }
-        setExam(data)
-        setLoading(false)
-      })
+    const load = async () => {
+      const { data: examData, error } = await supabase.from('exams').select('*').eq('id', id).single()
+      if (error || !examData) { toast.error('Examen introuvable'); navigate('/admin/exams'); return }
+      setExam(examData)
+      setLoading(false)
+    }
+    load()
   }, [id, navigate])
 
   const update = useCallback((patch) => {
@@ -325,8 +325,6 @@ export default function AdminExamDetail() {
 
   const save = async () => {
     setSaving(true)
-
-    // 1. Sauvegarder l'examen
     const { error } = await supabase
       .from('exams')
       .update({
@@ -338,34 +336,8 @@ export default function AdminExamDetail() {
         updated_at:  new Date().toISOString(),
       })
       .eq('id', id)
-
     if (error) { toast.error('Erreur : ' + error.message); setSaving(false); return }
-
-    // 2. Recalculer les scores de toutes les sessions soumises pour cet examen
-    const { data: sessions } = await supabase
-      .from('exam_sessions')
-      .select('id, answers')
-      .eq('exam_id', id)
-      .eq('status', 'submitted')
-
-    if (sessions?.length > 0) {
-      await Promise.all(
-        sessions.map((session) => {
-          const { totalPoints, maxPoints, finalNote, discordances } = scoreExam(
-            exam.questions,
-            session.answers ?? {}
-          )
-          return supabase
-            .from('exam_sessions')
-            .update({ final_note: finalNote, total_points: totalPoints, max_points: maxPoints, discordances })
-            .eq('id', session.id)
-        })
-      )
-      toast.success(`Sauvegardé — ${sessions.length} passage${sessions.length > 1 ? 's' : ''} recalculé${sessions.length > 1 ? 's' : ''} ✓`)
-    } else {
-      toast.success('Examen sauvegardé ✓')
-    }
-
+    toast.success('Examen sauvegardé ✓')
     setSaving(false)
     setDirty(false)
   }
